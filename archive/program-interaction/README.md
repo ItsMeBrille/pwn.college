@@ -2,7 +2,8 @@
 
 Below are brief explanations and minimal code snippets for each level from 8 to 54.
 
-
+Bash 1 -> 14
+Python using pwntools: 
 ## Bash
 
 ### Level 8
@@ -68,14 +69,15 @@ env -i /challenge/embryoio_level14
 ```
 
 
-## Python
+## Python pwntools
 
 ### Level 15
 
-Run the binary directly.
+Run the binary using pwntools.
 
 ```python
 from pwn import *
+
 p = process(['/challenge/embryoio_level15'])
 p.interactive()
 ```
@@ -83,10 +85,11 @@ p.interactive()
 
 ### Level 16
 
-Run the binary directly.
+Run the binary using pwntools.
 
 ```python
 from pwn import *
+
 p = process(['/challenge/embryoio_level16'])
 p.interactive()
 ```
@@ -94,10 +97,11 @@ p.interactive()
 
 ### Level 17
 
-Provide the required argument.
+Provide the required argument as a json-formated cmd.
 
 ```python
 from pwn import *
+
 p = process(['/challenge/embryoio_level17', 'jivlxzhtri'])
 p.interactive()
 ```
@@ -105,10 +109,11 @@ p.interactive()
 
 ### Level 18
 
-Set the required environment variable.
+Set the required environment variable using a json-formated cmd.
 
 ```python
 from pwn import *
+
 p = process(['/challenge/embryoio_level18'], env={'zdfuhr': 'rrxxbtnuky'})
 p.interactive()
 ```
@@ -120,6 +125,7 @@ Redirect input from a file.
 
 ```python
 from pwn import *
+
 p = process(['/challenge/embryoio_level19'], stdin=open('/tmp/ajasug', 'r'))
 p.interactive()
 ```
@@ -131,6 +137,7 @@ Redirect output to a file, then read it.
 
 ```python
 from pwn import *
+
 p = process(['/challenge/embryoio_level20'], stdout=open('/tmp/dkihjg', 'w'))
 p.interactive()
 q = process(['cat', '/tmp/dkihjg'])
@@ -144,6 +151,7 @@ Run with an empty environment.
 
 ```python
 from pwn import *
+
 p = process(['env', '-i', '/challenge/embryoio_level21'])
 p.interactive()
 ```
@@ -155,6 +163,7 @@ Run the binary directly.
 
 ```python
 from pwn import *
+
 p = process(['/challenge/embryoio_level22'])
 p.interactive()
 ```
@@ -166,6 +175,7 @@ Run the binary directly.
 
 ```python
 from pwn import *
+
 p = process(['/challenge/embryoio_level23'])
 p.interactive()
 ```
@@ -177,6 +187,7 @@ Provide the required argument.
 
 ```python
 from pwn import *
+
 p = process(['/challenge/embryoio_level24', 'kfcrhcrdqk'])
 p.interactive()
 ```
@@ -188,6 +199,7 @@ Set the required environment variable.
 
 ```python
 from pwn import *
+
 p = process(['/challenge/embryoio_level25'], env={'fimoun': 'shspjejaxc'})
 p.interactive()
 ```
@@ -199,6 +211,7 @@ Pipe output from `echo` to the binary.
 
 ```python
 from pwn import *
+
 o = process(['echo', 'trjvnbxk'], stdout=open('/tmp/eunodh', 'w'))
 p = process(['/challenge/embryoio_level26'], stdin=open('/tmp/eunodh', 'r'))
 p.interactive()
@@ -211,6 +224,7 @@ Redirect output to a file, then read it.
 
 ```python
 from pwn import *
+
 p = process(['/challenge/embryoio_level27'], stdout=open('/tmp/fnnofu', 'w'))
 p.interactive()
 q = process(['cat', '/tmp/fnnofu'])
@@ -224,12 +238,13 @@ Run with an empty environment.
 
 ```python
 from pwn import *
+
 p = process(['env', '-i', '/challenge/embryoio_level28'])
 p.interactive()
 ```
 
 
-## C
+## C execv
 
 ### Level 29
 
@@ -342,7 +357,7 @@ wait(NULL);
 ```
 
 
-## Python Subprocess
+## Python subprocess
 
 ### Level 48
 
